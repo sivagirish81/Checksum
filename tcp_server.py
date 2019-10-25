@@ -36,7 +36,7 @@ while 1:
 	connectionSocket, addr = serverSocket.accept()
 
 	sentence = connectionSocket.recv(1024).decode()
-
+	#print("\n**************",sentence,end="***********\n")
 	received_checksum = extract_checksum(sentence)
 	print("Received checksum:", received_checksum)
 

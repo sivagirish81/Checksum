@@ -30,8 +30,9 @@ clientSocket.connect((serverName,serverPort))
 file_path = input("Input absolute file path")
 
 content = read_file(file_path)
+contentws = content.replace("\n"," ")
 
-checksum = complement(compute_checksum(content))
+checksum = complement(compute_checksum(contentws))
 
 packet = content + "\n" + checksum 		#last line will always be checksum
 
