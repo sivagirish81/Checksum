@@ -21,38 +21,27 @@ def complement(wrapped_value):
 
 def read_file(file_path):
 	fd = open(file_path, 'r')
-	content = [x.strip() for x in fd.readlines()]
-	print(content)
+	content = fd.read()
 	fd.close()
 	return content
 
-def sent_successfully(line):
-
-	checksum = complement(compute_checksum(line))
-	packet = line + "\n" + checksum 		#last line will always be checksum
-	clientSocket.send(packet.encode())
-
-	acknowledgement_message = clientSocket.recv(1024).decode()		#ACK or NAK depending on whether message was received without corruption
-	if(acknowledgement_message == "ACK"):
-		return True
-	else:
-		return False
-		
-
-
-clientSocket = socket(AF_INET, SOCK_STREAM)					
+clientSocket = socket(AF_INET, SOCK_STREAM)			
 clientSocket.connect((serverName,serverPort))
 file_path = input("Input absolute file path")
 
 content = read_file(file_path)
 
-for line in content:
-	if(sent_successfully(line)):
-		continue
-	else:
-		print("Packet Loss, message was corrupted when received by Sender")
-		exit()
+checksum = complement(compute_checksum(content))
 
-print("Message received by Sender")
+packet = content + "\n" + checksum 		#last line will always be checksum
+
+clientSocket.send(packet.encode())
+
+acknowledgement_message = clientSocket.recv(1024).decode()		#ACK or NAK depending on whether message was received without corruption
+
+if(acknowledgement_message == "ACK"):
+	print("Message received by Sender")
+else:
+	print("Packet Loss, message was corrupted when received by Sender")
 
 clientSocket.close()

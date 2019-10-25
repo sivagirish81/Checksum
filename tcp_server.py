@@ -41,7 +41,8 @@ while 1:
 	print("Received checksum:", received_checksum)
 
 	message = extract_message(sentence)
-	print("Received message\n", message)
+	print("Received message")
+	print(message)
 
 	computed_checksum = compute_checksum(message)
 
