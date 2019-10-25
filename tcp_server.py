@@ -41,7 +41,10 @@ while 1:
 	print("Received checksum:", received_checksum)
 
 	message = extract_message(sentence)
+	print("Received message\n", message)
+
 	computed_checksum = compute_checksum(message)
+
 
 	if(validate_checksum(received_checksum, computed_checksum)):
 		acknowledgement_message = "ACK"
