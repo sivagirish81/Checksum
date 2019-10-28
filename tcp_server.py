@@ -26,7 +26,7 @@ def validate_checksum(received_checksum, computed_checksum):
 	c = bin(int(received_checksum,2) + int(computed_checksum,2))[2:]
 	return c == '1111111'
 
-serverPort = 12000
+serverPort = 12001
 
 serverSocket = socket(AF_INET,SOCK_STREAM)
 serverSocket.bind(("",serverPort))
@@ -38,11 +38,11 @@ while 1:
 	sentence = connectionSocket.recv(1024*1024).decode()
 	#print("\n**************",sentence,end="***********\n")
 	received_checksum = extract_checksum(sentence)
-	print("Received checksum:", received_checksum)
+	# print("Received checksum:", received_checksum)
 
 	message = extract_message(sentence)
-	print("Received message")
-	print(message)
+	# print("Received message")
+	# print(message)
 
 	computed_checksum = compute_checksum(message)
 
