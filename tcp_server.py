@@ -20,35 +20,38 @@ def extract_checksum(sentence):
 	return checksum
 
 def extract_message(sentence):	
-	message = ''.join(sentence.split("\n")[:-1])
+	message = '\n'.join(sentence.split("\n")[:-1])
 	return message
 
 def validate_checksum(received_checksum, computed_checksum):
 	c = bin(int(received_checksum,2) + int(computed_checksum,2))[2:]
 	return c == '1111111'
 
-serverPort = 12001
+serverPort = 12000
 
 serverSocket = socket(AF_INET,SOCK_STREAM)
 serverSocket.bind(("",serverPort))
 serverSocket.listen(1)
 print("The server is ready to receive")
-while 1:
+while True:
 	connectionSocket, addr = serverSocket.accept()
 
 	sentence = connectionSocket.recv(1024*1024).decode()
+	output_fd = open("output.txt", "w")
+	output_fd.write(sentence)
+	output_fd.close()
 	#print("\n**************",sentence,end="***********\n")
 	Output = open("Output.txt","w")
 	Output.write(sentence)
 	Output.close()
 	received_checksum = extract_checksum(sentence)
-	# print("Received checksum:", received_checksum)
+	print("Received checksum:", received_checksum)
 
 	message = extract_message(sentence)
-	# print("Received message")
-	# print(message)
+	print("Received message")
+	print(message)
 
-	computed_checksum = compute_checksum(message)
+	computed_checksum = compute_checksum(message.replace("\n"," "))
 
 
 	if(validate_checksum(received_checksum, computed_checksum)):
