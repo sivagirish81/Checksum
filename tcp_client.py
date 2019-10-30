@@ -3,7 +3,7 @@ from functools import reduce
 import sys
 
 serverName = "127.0.0.1"
-serverPort = 12001
+serverPort = 12000
 
 if(len(sys.argv) != 2):
 	print("Wrong usage, please input a code 1 - not error, 2 - error")
@@ -45,7 +45,7 @@ packet = content + "\n" + checksum 		#last line will always be checksum
 if(sys.argv[1] == "2"):					#introduce error
 	packet = "error" + packet 
 
-# print("Sent Message:", packet)
+print("Sent Message:", packet)
 clientSocket.send(packet.encode())
 
 acknowledgement_message = clientSocket.recv(1024*1024).decode()		#ACK or NAK depending on whether message was received without corruption
