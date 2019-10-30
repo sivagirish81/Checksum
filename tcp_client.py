@@ -33,7 +33,7 @@ def read_file(file_path):
 
 clientSocket = socket(AF_INET, SOCK_STREAM)			
 clientSocket.connect((serverName,serverPort))
-file_path = input("Input absolute file path")
+file_path = input("Input absolute file path : ")
 
 content = read_file(file_path)
 contentws = content.replace("\n"," ")

@@ -9,6 +9,7 @@ def wrap_add(a, b):			# a and b are binary string, we have to do udp style wrap 
 
 
 def compute_checksum(sentence):
+	sentence.replace("\n"," ")
 	binary_padded_equivalent = [format(ord(i), 'b').zfill(7) for i in sentence]
 	wrapped_result = reduce(wrap_add, binary_padded_equivalent)
 	return wrapped_result
@@ -37,6 +38,9 @@ while 1:
 
 	sentence = connectionSocket.recv(1024*1024).decode()
 	#print("\n**************",sentence,end="***********\n")
+	Output = open("Output.txt","w")
+	Output.write(sentence)
+	Output.close()
 	received_checksum = extract_checksum(sentence)
 	# print("Received checksum:", received_checksum)
 
