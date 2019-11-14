@@ -51,8 +51,8 @@ clientSocket.send(packet.encode())
 acknowledgement_message = clientSocket.recv(1024*1024).decode()		#ACK or NAK depending on whether message was received without corruption
 
 if(acknowledgement_message == "ACK"):
-	print("Message received by Sender")
+	print("Message received by Server")
 else:
-	print("Packet Loss, message was corrupted when received by Sender")
+	print("Packet Loss, message was corrupted when received by Server")
 
 clientSocket.close()
